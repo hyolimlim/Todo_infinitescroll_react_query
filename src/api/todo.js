@@ -1,11 +1,15 @@
 import axios from "axios";
 
-axios.defaults.baseURL = "http://localhost:4000/";
+axios.defaults.baseURL = "http://localhost:4000";
 
 export const getTodos = () => {
-  return axios.get("todos");
+  return axios.get("/todos");
 };
 
-export const addTodo = (todo) => {
-  return axios.post("todos", todo);
+export const addTodo = async (todo) => {
+  return await axios.post("/todos", todo);
+};
+
+export const deleteTodo = async (id) => {
+  return await axios.delete(`/todos/${id}`);
 };

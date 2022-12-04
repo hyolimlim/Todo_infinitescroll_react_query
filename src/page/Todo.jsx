@@ -1,6 +1,6 @@
 import axios from "axios";
 import React from "react";
-import { useQueryClient, useQuery } from "react-query";
+import { useQuery } from "react-query";
 import TodoInput from "../components/TodoInput";
 import Todolist from "../components/Todolist";
 import { getTodos } from "../api/todo";
@@ -19,8 +19,13 @@ function Todo() {
   return (
     <div>
       <h1>Todolist</h1>
+      <TodoInput />
       {data?.data.map((todo) => {
-        return <Todolist key={todo.id} todo={todo.todo}></Todolist>;
+        return (
+          <div key={todo.id}>
+            <Todolist id={todo.id} todo={todo.todo} />
+          </div>
+        );
       })}
     </div>
   );
