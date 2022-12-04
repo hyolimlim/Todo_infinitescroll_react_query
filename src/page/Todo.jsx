@@ -1,4 +1,3 @@
-import axios from "axios";
 import React from "react";
 import { useQuery } from "react-query";
 import TodoInput from "../components/TodoInput";
@@ -20,13 +19,9 @@ function Todo() {
     <div>
       <h1>Todolist</h1>
       <TodoInput />
-      {data?.data.map((todo) => {
-        return (
-          <div key={todo.id}>
-            <Todolist id={todo.id} todo={todo.todo} />
-          </div>
-        );
-      })}
+      {data?.data.map((todo) => (
+        <Todolist todo={todo.todo} key={todo.id} id={todo.id} />
+      ))}
     </div>
   );
 }

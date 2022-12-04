@@ -1,6 +1,6 @@
-import React from "react";
+import { useState } from "react";
 import { useQueryClient, useMutation } from "react-query";
-import { deleteTodo } from "../api/todo";
+import { deleteTodo, updateTodo } from "../api/todo";
 
 function Todolist({ todo, id }) {
   const queryClient = useQueryClient();
@@ -11,17 +11,41 @@ function Todolist({ todo, id }) {
     },
   });
 
-  const handleDelete = () => {
-    deleteTodoMutation.mutate(id);
-  };
+  const [isClicked, setIsClicked] = useState(false);
+
+  const [updateInput, setUpdateInput] = useState(todo);
+
+  const updateTodoMutation = useMutation(updateTodo, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("todos");
+    },
+  });
 
   return (
     <div>
-      <div>
-        {todo}
-        <button>수정</button>
-        <button>삭제</button>
-      </div>
+      {!isClicked ? (
+        <div>
+          <p>{todo}</p>
+          <button onClick={() => setIsClicked(true)}>수정</button>
+          <button onClick={() => deleteTodoMutation.mutate(id)}>삭제</button>
+        </div>
+      ) : (
+        <div>
+          <input
+            value={updateInput}
+            onChange={(e) => setUpdateInput(e.target.value)}
+          />
+          <button
+            onClick={() => {
+              updateTodoMutation.mutate({ id: id, todo: updateInput });
+              setIsClicked(false);
+            }}
+          >
+            수정
+          </button>
+          <button onClick={() => deleteTodoMutation.mutate(id)}>삭제</button>
+        </div>
+      )}
     </div>
   );
 }
