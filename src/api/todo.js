@@ -13,3 +13,7 @@ export const addTodo = async (todo) => {
 export const deleteTodo = async (id) => {
   return await axios.delete(`/todos/${id}`);
 };
+
+export const updateTodo = async ({ id, todo }) => {
+  return await axios.patch(`/todos/${id}`, { todo: todo });
+};
