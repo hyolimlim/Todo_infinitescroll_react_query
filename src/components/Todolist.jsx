@@ -11,16 +11,12 @@ function Todolist({ todo, id }) {
     },
   });
 
-  const handleDelete = () => {
-    deleteTodoMutation.mutate(id);
-  };
-
   return (
     <div>
       <div>
         {todo}
         <button>수정</button>
-        <button>삭제</button>
+        <button onClick={() => deleteTodoMutation.mutate(id)}>삭제</button>
       </div>
     </div>
   );
